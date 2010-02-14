@@ -49,7 +49,7 @@ class IntrospectorTest(TestCase):
     def test_basic_mapping(self):
         DEFAULT_MAPPINGS = {
         'comments.comment': {
-            'content': 'comment',
+            'content': 'user_name',
             'pub_date': 'submit_date',
              },
         'auth.user': {
@@ -60,3 +60,9 @@ class IntrospectorTest(TestCase):
 
         user_inspecter = base.Inspecter(self.user, DEFAULT_MAPPINGS)
         self.assertEqual(user_inspecter.content.field, 'username')
+        self.assertEqual(user_inspecter.content.value, 'test')
+
+        #Test that the mapping overrides the defaults.
+        comment_ins = base.Inspecter(self.comment, DEFAULT_MAPPINGS)
+        self.assertEqual(comment_ins.content.field, 'user_name')
+        self.assertEqual(comment_ins.content.value, 'Joe Somebody')
