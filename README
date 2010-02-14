@@ -1,3 +1,7 @@
 A stupidly simple Django model introspection API.
 
 Check out the tests for usage.
+
+Thanks to:
+
+James Bennett <http://b-list.org> for inspiration and some ideas.
