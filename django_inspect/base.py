@@ -11,7 +11,9 @@ class Inspecter(object):
     def __init__(self, model=None, mapping=None):
         self.model = model
         for parser in BaseParser.__subclasses__():
-            setattr(self, parser.key, parser(model, mapping=mapping))
+            active = getattr(parser, 'active', True)
+            if active:
+                setattr(self, parser.key, parser(model, mapping=mapping))
 
 
 class BaseParser(object):
