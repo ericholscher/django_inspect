@@ -1,5 +1,13 @@
 A stupidly simple Django model introspection API.
 
+A blog post explaining it's usage:
+
+http://ericholscher.com/blog/2010/feb/14/django-inspect-generic-introspection-api-django-mo/
+
+Latest Test Results:
+
+http://devmason.com/pony_server/django_inspect
+
 Check out the tests for usage.
 
 Thanks to:
