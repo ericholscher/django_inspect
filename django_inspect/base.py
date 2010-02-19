@@ -9,18 +9,24 @@ class Inspecter(object):
     """
 
     def __init__(self, model=None, mapping=None):
+        self.parsers = {}
         self.model = model
         for parser in BaseParser.__subclasses__():
             active = getattr(parser, 'active', True)
             if active:
-                setattr(self, parser.key, parser(model, mapping=mapping))
-
+                self.parsers[parser.key] = parser(model, mapping=mapping)
+                setattr(self.__class__, parser.key, parser(model, mapping=mapping))
 
 class BaseParser(object):
     """
     Handle any mapping passed in.
     All parsers should subclass this.
     """
+
+    def __get__(self, instance, owner):
+        self._instance = instance
+        self._parsers = instance.parsers
+        return self
 
     def __init__(self, model, mapping=None):
         self.model = model
