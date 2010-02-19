@@ -75,6 +75,20 @@ class TitleParser(BaseParser):
 class IpAddressParser(BaseParser):
     key = 'ip_address'
 
+class PointParser(BaseParser):
+    key = 'point'
+
+    @property
+    def field(self):
+        field = super(PointParser, self).field
+        if self._parsers.has_key('latitude') and self._parsers.has_key('longitude'):
+            return (self._instance.latitude.field, self._instance.longitude.field)
+        if field:
+            return field
+        if hasattr(self.model, 'lat'):
+            return 'lat'
+        return None
+
 class LatParser(BaseParser):
     key = 'latitude'
 
