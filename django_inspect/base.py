@@ -43,6 +43,8 @@ class BaseParser(object):
 
     @property
     def value(self):
+        if not self.field:
+            return None
         return getattr(self.model, self.field)
 
 class ContentParser(BaseParser):
