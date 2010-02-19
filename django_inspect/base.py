@@ -96,7 +96,7 @@ class LatParser(BaseParser):
 
     @property
     def field(self):
-        field = super(PubDateParser, self).field
+        field = super(LatParser, self).field
         if field:
             return field
         if hasattr(self.model, 'lat'):
@@ -108,7 +108,7 @@ class LongParser(BaseParser):
 
     @property
     def field(self):
-        field = super(PubDateParser, self).field
+        field = super(LongParser, self).field
         if field:
             return field
         if hasattr(self.model, 'long'):
