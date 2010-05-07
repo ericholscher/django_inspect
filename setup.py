@@ -5,7 +5,6 @@ setup(
     version = "0.1",
     packages = [
         "django_inspect",
-        "django_inspect.tests",
     ],
     author = "Eric Holscher",
     author_email = "eric@ericholscher.com",
