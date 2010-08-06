@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from utils import get_field_by_type, get_related_field
@@ -31,7 +32,11 @@ class BaseParser(object):
     def __init__(self, model, mapping=None):
         self.model = model
         self.app_string = "%s.%s" % (model._meta.app_label, model._meta.module_name)
-        self.mapping = mapping
+        if mapping:
+            self.mapping = mapping
+        else:
+            self.mapping = getattr(settings, 'INSPECT_MAPPINGS', None)
+
 
     @property
     def field(self):
@@ -126,3 +131,48 @@ class UserParser(BaseParser):
         if hasattr(self.model, 'author'):
             return 'author'
         return get_related_field(self.model, User)
+
+class NameParser(BaseParser):
+    key = 'name'
+
+class TagParser(BaseParser):
+    key = 'tags'
+
+class AddressParser(BaseParser):
+    key = 'address'
+
+    @property
+    def field(self):
+        field = super(AddressParser, self).field
+        if field:
+            return field
+        if hasattr(self.model, 'address1'):
+            return 'address1'
+        return None
+
+class PhoneParser(BaseParser):
+    key = 'phone'
+
+    @property
+    def field(self):
+        field = super(PhoneParser, self).field
+        if field:
+            return field
+        if hasattr(self.model, 'phone1'):
+            return 'phone1'
+        return None
+
+class TypeParser(BaseParser):
+    key = 'type'
+
+    @property
+    def field(self):
+        field = super(TypeParser, self).field
+        if field:
+            return field
+        if hasattr(self.model, 'activity_type'):
+            return 'activity_type'
+        if hasattr(self.model, 'notice_type'):
+            return 'notice_type'
+        return None
+
